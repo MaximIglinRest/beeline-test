@@ -1,0 +1,19 @@
+version: '3.3'
+
+services:
+  api:
+    build:
+      context: "../../."
+    image: api-image
+
+  tests:
+    build:
+      context: "."
+    image: api-tests
+    env_file:
+      - ../../.env
+    environment:
+      - API_HOST=api
+      - API_PORT=8000
+    depends_on:
+      - api
