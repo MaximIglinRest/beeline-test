@@ -1,8 +1,31 @@
 version: '3.9'
+
+volumes:
+  postgres_data:
+
 services:
+  db:
+    container_name: db
+    image: postgres:13-alpine
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB
+      - POSTGRES_USER
+      - POSTGRES_PASSWORD
+
   api:
     container_name: api
     build: .
+    environment:
+      - POSTGRES_HOST
+      - POSTGRES_DB
+      - POSTGRES_USER
+      - POSTGRES_PASSWORD
+    depends_on:
+      - db
 
   nginx:
     container_name: nginx
