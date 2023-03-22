@@ -9,4 +9,8 @@ RUN apk add build-base
 RUN python -m pip install --upgrade pip && \
     pip install -r requirements.txt --no-cache-dir
 
-CMD gunicorn main:app --bind 0.0.0.0:8000 -k uvicorn.workers.UvicornWorker
+COPY entrypoint.sh .
+COPY src/utils .
+
+RUN chmod +x /app/entrypoint.sh
+ENTRYPOINT ["/app/entrypoint.sh"]
