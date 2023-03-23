@@ -20,6 +20,7 @@ class User(Base):
         nullable=False,
     )
     name = Column(String(300), nullable=False, unique=True)
+    password = Column(String(300), nullable=False)
     event_registrations = relationship(
         "UserEventRegistration",
         uselist=True,

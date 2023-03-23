@@ -1,8 +1,7 @@
 import sqlalchemy as sa
 from alembic import op
 
-# revision identifiers, used by Alembic.
-revision = "72cd3bd0144d"
+revision = "7ecab6e661be"
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -23,6 +22,7 @@ def upgrade() -> None:
         "user",
         sa.Column("id", sa.UUID(), nullable=False),
         sa.Column("name", sa.String(length=300), nullable=False),
+        sa.Column("password", sa.String(length=300), nullable=False),
         sa.PrimaryKeyConstraint("id"),
         sa.UniqueConstraint("id"),
         sa.UniqueConstraint("name"),
@@ -32,7 +32,9 @@ def upgrade() -> None:
         sa.Column("id", sa.UUID(), nullable=False),
         sa.Column("user_id", sa.UUID(), nullable=False),
         sa.Column("event_id", sa.UUID(), nullable=False),
-        sa.ForeignKeyConstraint(["event_id"], ["event.id"], ondelete="CASCADE"),
+        sa.ForeignKeyConstraint(
+            ["event_id"], ["event.id"], ondelete="CASCADE"
+        ),
         sa.ForeignKeyConstraint(["user_id"], ["user.id"], ondelete="CASCADE"),
         sa.PrimaryKeyConstraint("id", "user_id", "event_id"),
         sa.UniqueConstraint("id"),
