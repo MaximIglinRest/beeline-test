@@ -17,6 +17,7 @@ def backoff(
     max_retries=5,
 ):
     """Механизм back-off для ожидания подключения к клиенту."""
+
     def func_wrapper(func):
         @wraps(func)
         def inner(*args, **kwargs):
